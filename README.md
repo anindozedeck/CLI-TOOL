@@ -1,6 +1,6 @@
-# Email Drafter CLI
+# Meeting Notes Summarizer
 
-Email Drafter is a small command-line tool that turns a short topic into a concise, warm, professional Kenyan business email using OpenAI's `gpt-4o-mini` model.
+Meeting Notes Summarizer turns pasted meeting notes into three concise sections: decisions made, action items with owners and any mentioned deadlines, and unresolved questions. It is designed for NGO, school, and business teams. It uses OpenAI's `gpt-4o-mini` model and does not invent missing owners or deadlines.
 
 ## Requirements
 
@@ -8,34 +8,59 @@ Email Drafter is a small command-line tool that turns a short topic into a conci
 - An OpenAI API key with API access enabled
 - An internet connection
 
-## Install
+## Installation
 
-Open a terminal in the folder containing `CLI_Tool.py`, then install the required packages:
+Open a terminal in this folder and install the dependencies:
 
 ```powershell
 python -m pip install openai python-dotenv
 ```
 
-Create a file named `.env` in the same folder as `CLI_Tool.py` and add your API key:
+Create a file named `.env` in this folder and add your API key:
 
 ```text
 OPENAI_API_KEY=your_openai_api_key
 ```
 
-Replace `your_openai_api_key` with your actual key. Do not share the key or commit the `.env` file.
+Replace `your_openai_api_key` with your actual key. Keep it private and do not commit the `.env` file.
 
-## Use
+## Example interaction
 
-From that folder, run the script with a topic in quotes:
+Run the summarizer:
+
+```powershell
+python Day15_exercise.py
+```
+
+Paste the notes, then press **Ctrl+Z** and **Enter** on Windows to send them:
+
+```text
+Discussed the school garden project. Amina will order seeds by Friday.
+The team agreed to start planting next Monday. Need to confirm who will
+arrange transport for the tools.
+```
+
+Example output:
+
+```text
+Decisions made
+- Start planting next Monday.
+
+Action items
+- Amina: order seeds by Friday.
+
+Unresolved questions
+- Who will arrange transport for the tools?
+```
+
+The tool reports actionable errors for empty notes, missing or invalid API keys, connection and timeout failures, and empty API responses.
+
+## Existing Email Drafter
+
+This repository also includes the Email Drafter CLI. It creates a concise, professional Kenyan business email from a topic using the same API key and dependencies.
 
 ```powershell
 python CLI_Tool.py "follow up on unpaid invoice"
 ```
-
-The generated email is printed in the terminal. The topic can include spaces; the tool combines all supplied words into one topic.
-
-If you run the command without a topic, the tool prints the usage instructions. If a request fails, it prints an error and a suggested next step to stderr. For example, if the API key is missing or invalid, check the `OPENAI_API_KEY` value in `.env`.
-
-## Cost
 
 The example request is estimated at about **KES 0.10 per email**. This is only a rough estimate: actual cost depends on the topic and generated email length, current OpenAI token pricing, and the USD/KES exchange rate. Check the [OpenAI API pricing page](https://openai.com/api/pricing/) for current rates. API usage is billed by OpenAI and is separate from any ChatGPT subscription.
